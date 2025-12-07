@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect  } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -15,21 +14,37 @@ import UserDashboard from "./pages/UserDashboard";
 import AdmissionFormPage from "./pages/AdmissionFormPage";
 
 function App() {
-  const [currentStudent, setCurrentStudent] = useState(
-    JSON.parse(localStorage.getItem("activeStudent"))
-  );
+  const [currentStudent, setCurrentStudent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // called from LoginPage
-const handleLogin = (student) => {
-  localStorage.setItem("activeStudent", JSON.stringify(student));
-  setCurrentStudent(student);
-};
+  // ✅ restore session on refresh
+  useEffect(() => {
+  fetch("http://localhost:8000/me", {
+    credentials: "include",
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Not logged in");
+      return res.json();
+    })
+    .then((data) => setCurrentStudent(data))
+    .catch(() => setCurrentStudent(null))
+    .finally(() => setLoading(false));
+}, []);
+
+  const handleLogin = (student) => {
+    setCurrentStudent(student);
+  };
 
 
-  const handleLogout = () => {
-    localStorage.removeItem("activeStudent");
+    const handleLogout = async () => {
+    await fetch("http://localhost:8000/logout", {
+      method: "POST",
+      credentials: "include",
+    });
     setCurrentStudent(null);
   };
+
+  if (loading) return null;
 
   return (
     <Router>

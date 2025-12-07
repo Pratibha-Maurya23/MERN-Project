@@ -12,7 +12,7 @@ export default function AdmissionFormPage({ onNavigate }) {
     branch:"",
     document: null,
   });
-
+  
   const courses = [
     "BTech","MCA","MBA",
   ]
@@ -68,7 +68,7 @@ const validateForm = () => {
   return Object.keys(newErrors).length === 0;
 };
 
-const handleSubmit = (e) => {
+const handleSubmit = async(e) => {
   e.preventDefault();
   if (!validateForm()) return;
 
@@ -88,11 +88,23 @@ const handleSubmit = (e) => {
     year: new Date().getFullYear(),
   };
 
-  const students = JSON.parse(localStorage.getItem("students")) || [];
-  students.push(studentData);
-  localStorage.setItem("students", JSON.stringify(students));
+  try {
+    const res = await fetch("http://localhost:8000/admission", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(studentData),
+    });
 
-  setSubmitted({ admissionNo, password });
+    const data = await res.json();
+
+    // backend sends admissionNo + password
+    setSubmitted({
+      admissionNo: data.admissionNo,
+      password: data.password,
+    });
+  } catch (err) {
+    alert("Admission failed ❌");
+  }
 };
 
 
