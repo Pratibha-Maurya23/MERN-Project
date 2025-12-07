@@ -1,12 +1,3 @@
-import { useState } from "react";
-import {
-  User,
-  Mail,
-  Github,
-  Award,
-  BookOpen,
-  CheckCircle,
-} from "lucide-react";
 
 export default function UserDashboard({ student }) {
   return (
@@ -20,7 +11,7 @@ export default function UserDashboard({ student }) {
           <h3 className="font-semibold">Admission Details</h3>
           <p>Admission No: {student.admissionNo}</p>
           <p>Course: {student.course}</p>
-          <p>Status: {student.status}</p>
+          <p>DOB: {student.dob}</p>
           <p>Year: {student.year}</p>
         </div>
 
@@ -28,7 +19,7 @@ export default function UserDashboard({ student }) {
           <h3 className="font-semibold">Profile</h3>
           <p>Email: {student.email}</p>
           <p>Phone: {student.phone}</p>
-          <p>DOB: {student.dob}</p>
+          <p>Address: {student.address}</p>
         </div>
       </div>
 

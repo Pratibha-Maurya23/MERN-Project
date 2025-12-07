@@ -89,7 +89,7 @@ const handleSubmit = async(e) => {
   };
 
   try {
-    const res = await fetch("http://localhost:8000/admission", {
+    const res = await fetch("http://16.171.22.220:8000/admission", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(studentData),

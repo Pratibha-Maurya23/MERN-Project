@@ -19,7 +19,7 @@ function App() {
 
   // ✅ restore session on refresh
   useEffect(() => {
-  fetch("http://localhost:8000/me", {
+  fetch("http://16.171.22.220:8000/me", {
     credentials: "include",
   })
     .then((res) => {
@@ -37,7 +37,7 @@ function App() {
 
 
     const handleLogout = async () => {
-    await fetch("http://localhost:8000/logout", {
+    await fetch("http://16.171.22.220:8000/logout", {
       method: "POST",
       credentials: "include",
     });

@@ -13,7 +13,7 @@ export default function LoginPage({ onLogin }) {
 
  const handleLogin = async () => {
   try {
-    const res = await fetch("http://localhost:8000/login", {
+    const res = await fetch("http://16.171.22.220:8000/login", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   credentials: "include",
@@ -25,8 +25,8 @@ export default function LoginPage({ onLogin }) {
       return;
     }
 
-    const student = await res.json();
-    onLogin(student);
+    const data = await res.json();
+onLogin(data);   
     navigate("/dashboard");
   } catch (err) {
     alert("Server error ❌");
@@ -35,7 +35,7 @@ export default function LoginPage({ onLogin }) {
 
   const handleForgotPassword = async () => {
     try {
-      const res = await fetch("http://localhost:8000/forgot-password", {
+      const res = await fetch("http://16.171.22.220:8000/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ admissionNo, newPassword }),
